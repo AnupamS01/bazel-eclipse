@@ -33,6 +33,11 @@ jobs:
           name: ci-event-file.txt
           path: ./ci-event-file.txt
 
+  upload-event-json:
+    needs: create-and-upload-artifacts
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Upload ci-event-file event.json
         uses: actions/upload-artifact@v2
         with:
