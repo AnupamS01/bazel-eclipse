@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  create-artifact:
+  create-and-upload-artifacts:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +22,6 @@ jobs:
           # Create a ci-event-file artifact
           echo "This is a ci-event-file artifact" > ci-event-file.txt
 
-      - name: Upload test-results Artifact
         uses: actions/upload-artifact@v2
         with:
           name: test-results-123.txt
@@ -33,3 +32,9 @@ jobs:
         with:
           name: ci-event-file.txt
           path: ./ci-event-file.txt
+
+      - name: Upload ci-event-file event.json
+        uses: actions/upload-artifact@v2
+        with:
+          name: ci-event-file-event-json.json
+          path: artifacts/ci-event-file/event.json
