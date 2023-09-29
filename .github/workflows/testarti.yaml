@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Create and Upload Artifact
+      - name: Create Artifacts
         run: |
           # Create a test-results artifact
           echo "This is a test artifact" > test-results-123.txt
@@ -22,24 +22,33 @@ jobs:
           # Create a ci-event-file artifact
           echo "This is a ci-event-file artifact" > ci-event-file.txt
 
+      - name: Upload test-results Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: test-results-123.txt
+          name: test-results
           path: ./test-results-123.txt
 
       - name: Upload ci-event-file Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ci-event-file.txt
+          name: ci-event-file
           path: ./ci-event-file.txt
 
   upload-event-json:
-    needs: create-and-upload-artifacts
     runs-on: ubuntu-latest
+    needs: create-and-upload-artifacts
 
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Create Artifacts Directory
+        run: |
+          mkdir -p artifacts/ci-event-file
+          echo "This is a sample event.json" > artifacts/ci-event-file/event.json
+
       - name: Upload ci-event-file event.json
         uses: actions/upload-artifact@v2
         with:
-          name: ci-event-file-event-json.json
+          name: event-json
           path: artifacts/ci-event-file/event.json
