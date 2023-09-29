@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main  # Replace with the branch you want to trigger on
+
+jobs:
+  create-and-upload-artifact:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Create p2 Repository Archive
+        run: |
+          # Create a directory for the p2 repository
+          mkdir -p bazel-eclipse-latest
+
+          # Create some sample files (replace this with your actual files)
+          echo "AnupamAS01" > bazel-eclipse-latest/file1.txt
+          echo "Another test" > bazel-eclipse-latest/file2.txt
+
+          # Create the p2-repository.zip archive
+          zip -r bazel-eclipse-latest/p2-repository.zip bazel-eclipse-latest
+
+      - name: Upload p2 Repository Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: p2-repository
+          path: bazel-eclipse-latest/p2-repository.zip
