@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  create-artifact:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Create and Upload Artifact
+        run: |
+          # Create a test-results artifact
+          echo "This is a test artifact" > test-results-123.txt
+          echo "This is another test artifact" > test-results-456.txt
+
+          # Create a ci-event-file artifact
+          echo "This is a ci-event-file artifact" > ci-event-file.txt
+
+      - name: Upload test-results Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results-123.txt
+          path: ./test-results-123.txt
+
+      - name: Upload ci-event-file Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ci-event-file.txt
+          path: ./ci-event-file.txt
